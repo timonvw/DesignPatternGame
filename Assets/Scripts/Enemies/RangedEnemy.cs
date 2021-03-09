@@ -11,7 +11,7 @@ public class RangedEnemy : Enemy
 
     // Update is called once per frame
     void Update() {
-        ChasePlayer(5);
+        ChasePlayer(3);
     }
 
     public override void Attack() {

@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private float vertical;
     private float moveLimiter = 0.7f;
     public float speed = 8.5f;
+    public GameObject explosionPrefab;
     
     // Start is called before the first frame update
     private void Start()
@@ -38,10 +39,17 @@ public class Player : MonoBehaviour
             if(hit.collider != null) {
                 ITakeDamage damageable = hit.collider.GetComponent<ITakeDamage>();
                 if(damageable != null) {
+                    SpawnExplosion(new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y));
                     damageable.TakeDamage(damage);
-                    Debug.Log("HITTT");
+                    GameMaster.Instance.mainCamera.Shake(0.02f);
                 }
             }
         }
+    }
+
+    // Create a particle explosion effect
+    private void SpawnExplosion(Vector2 pos) {
+         GameObject explosion = Instantiate(explosionPrefab, pos, Quaternion.identity) as GameObject;
+         Destroy(explosion, 1f);
     }
 }

@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy
 {
-    // Start is called before the first frame update
-    void Start() {
-        
-    }
-
     // Update is called once per frame
     void Update() {
-        ChasePlayer(0);
+        Attack();
     }
 
     public override void Attack() {
-        Debug.Log("Sla Melee");
+        ChasePlayer(0);
+    }
+
+    private void OnCollisionEnter2D(Collision2D col) {
+        if(col.gameObject.name == "Player") {
+            GameMaster.Instance.mainCamera.Shake(0.1f);
+            GameMaster.Instance.playerHealth -= (int)damage;
+            Kill();
+        }
     }
 }
