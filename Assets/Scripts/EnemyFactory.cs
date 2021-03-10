@@ -14,6 +14,9 @@ public class EnemyFactory : MonoBehaviour
     private GameObject rangedPrefab;
     private GameObject meleePrefab;
 
+    public enum EnemyType { Melee, Ranged, Random }
+    public enum EnemyState { Normal, Beefed, Diminished, Dead }
+
     private void Awake() {
         // Set prefabs
         rangedPrefab = Resources.Load("Prefabs/Enemies/Ranged") as GameObject;
@@ -21,13 +24,13 @@ public class EnemyFactory : MonoBehaviour
     }
 
     // Return requested enemy
-    public GameObject CreateEnemy(string enemyType, Vector2 pos) {
-        switch (enemyType.ToLower()) {
-            case "melee":
+    public GameObject CreateEnemy(EnemyType enemyType, Vector2 pos) {
+        switch (enemyType) {
+            case EnemyType.Melee:
                 return createMelee(pos);
-            case "ranged":
+            case EnemyType.Ranged:
                 return createRanged(pos);
-            case "random":
+            case EnemyType.Random:
                 return createRandom(pos);
             default:
                 return null;
@@ -41,6 +44,7 @@ public class EnemyFactory : MonoBehaviour
             baseHealthMelee * GameMaster.Instance.enemyHealthMultiplier,
             baseSpeedMelee * GameMaster.Instance.enemySpeedMultiplier,
             baseDamageMelee * GameMaster.Instance.enemyDamageMultiplier);
+        GameMaster.Instance.AddEnemyToCollection(melee);
         return melee;
     }
 
@@ -51,6 +55,7 @@ public class EnemyFactory : MonoBehaviour
             baseHealthRanged * GameMaster.Instance.enemyHealthMultiplier,
             baseSpeedRanged * GameMaster.Instance.enemySpeedMultiplier,
             baseDamageRanged * GameMaster.Instance.enemyDamageMultiplier);
+        GameMaster.Instance.AddEnemyToCollection(ranged);
         return ranged;
     }
 

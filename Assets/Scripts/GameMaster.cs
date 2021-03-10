@@ -13,6 +13,8 @@ public class GameMaster : MonoBehaviour
     public EnemyFactory enemyFactory;
     public CameraMove mainCamera;
 
+    public EnemyCollection enemyCollection = new EnemyCollection();
+
     public int playerHealth { set; get; }
 
     // Enemy
@@ -41,11 +43,13 @@ public class GameMaster : MonoBehaviour
         baseSpawnTimer = 7f;
         enemiesKilled = 0;
     }
-    
-    // Start is called before the first frame update
-    private void Start()
-    {
-        
+
+    public void AddEnemyToCollection(GameObject enemy) {
+        EnemyCollection.enemiesCollection.Add(enemy);
+    }
+
+    public void RemoveEnemyFromCollection(GameObject enemy) {
+        EnemyCollection.enemiesCollection.Remove(enemy);
     }
 
     // Update is called once per frame

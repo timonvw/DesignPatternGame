@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeleeEnemy : Enemy
 {
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         Attack();
     }
 
@@ -19,5 +19,9 @@ public class MeleeEnemy : Enemy
             GameMaster.Instance.playerHealth -= (int)damage;
             Kill();
         }
+    }
+
+    public override void SetState() {
+        // TODO Animations here depeding on the EnemyFactory.EnemyState
     }
 }

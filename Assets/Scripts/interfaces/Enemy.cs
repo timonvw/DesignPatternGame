@@ -6,9 +6,9 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage
 {
     public string enemyName { private set; get; }
     public float health { private set; get; }
-    public float speed { private set; get; }
-    public string state { private set; get; }
-    public float damage { private set; get; }
+    public float speed { set; get; }
+    public EnemyFactory.EnemyState state { set; get; }
+    public float damage { set; get; }
     public TextMesh nameText;
     public TextMesh healthText;
     protected GameObject player;
@@ -31,6 +31,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage
         player = GameObject.Find("Player");
         nameText.text = enemyName;
         healthText.text = health.ToString();
+        state = EnemyFactory.EnemyState.Normal;
     }
 
     // Follow player till reached max distance
@@ -41,14 +42,13 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage
         }
     }
 
-    protected void Kill() {
+    public void Kill() {
         GameMaster.Instance.enemiesKilled++;
+        GameMaster.Instance.RemoveEnemyFromCollection(gameObject);
         Destroy(gameObject);
     }
 
     public abstract void Attack();
 
-    public void SetState() {
-        Debug.Log("State");
-    }
+    public abstract void SetState();
 }

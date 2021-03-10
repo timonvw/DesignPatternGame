@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
 
     // Start is called before the first frame update
     private void Start() {
+
         randomStart = Random.Range(0.5f,GameMaster.Instance.baseSpawnTimer);
 
         StartCoroutine(SpawnEnemy(new Vector2(
@@ -23,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
         
         yield return new WaitForSeconds(totalSeconds);
         
-        GameMaster.Instance.enemyFactory.CreateEnemy("Random", pos);
+        GameMaster.Instance.enemyFactory.CreateEnemy(EnemyFactory.EnemyType.Random, pos);
         StartCoroutine(SpawnEnemy(pos, true));
     }
 }
